@@ -18,11 +18,14 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 # change region as needed
+          aws-region: us-east-1
 
       - name: Deploy CloudFormation Stack
         run: |
           aws cloudformation deploy \
             --template-file vpc-setup.yaml \
             --stack-name MyVPCStack \
-            --capabilities CAPABILITY_NAMED_IAM
+            --capabilities CAPABILITY_NAMED_IAM \
+            --parameter-overrides \
+              AvailabilityZone1=us-east-1a \
+              AvailabilityZone2=us-east-1b
